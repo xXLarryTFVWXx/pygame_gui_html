@@ -1,0 +1,12 @@
+<!DOCTYPE menu>
+<meta charset="utf-8"/>
+<meta name="viewport" context="2d" size="600 600" fullscreen="false"/>
+
+<menu id="menuMain">
+    <img src="art/menu/main.png"/>
+    <audio src="music/menu/main.ogg" type="vorbis/ogg" loop></audio>
+    <button pos="200,300" target="menuSingle">1P MODE</button>
+    <button pos="300,300" target="menuVersus">VS MODE</button>
+    <button pos="400,300" target="menuOptions">OPTIONS</button>
+    <button pos="500,300" target="quitConfirm">QUIT</button>
+</menu>
