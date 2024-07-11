@@ -4,6 +4,7 @@ from .errors import *
 
 valid_animations = []
 
+
 if not hasattr(pygame, "IS_CE"):
     raise LibraryError("You need pygame_ce installed.")
 
@@ -32,8 +33,9 @@ class Menu:
             return
         raise NotImplementedError
 
+menus: list[Menu] = []
 
-manager: pygame_gui.UIManager = pygame_gui.UIManager((600,600))
+manager: pygame_gui.UIManager = pygame_gui.UI_Manager((600,600))
 
 def get_manager() -> pygame_gui.UIManager:
     return manager

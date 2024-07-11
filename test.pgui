@@ -2,11 +2,28 @@
 <meta charset="utf-8"/>
 <meta name="viewport" context="2d" size="600 600" fullscreen="false"/>
 
+<menu id="menuTitle">
+    <img src="art/titleScreen.png"/>
+    <audio src="music/title.png" loop/>
+    <input type="keypress" target="menuMain"/>
+    <timer event="demoStart" duration="10000"/>
+</menu>
+
 <menu id="menuMain">
-    <img src="art/menu/main.png"/>
-    <audio src="music/menu/main.ogg" type="vorbis/ogg" loop></audio>
-    <button pos="200,300" target="menuSingle">1P MODE</button>
-    <button pos="300,300" target="menuVersus">VS MODE</button>
-    <button pos="400,300" target="menuOptions">OPTIONS</button>
-    <button pos="500,300" target="quitConfirm">QUIT</button>
+    <img src="art/menuMain.png"/>
+    <audio src="music/menu.ogg" type="vorbis/ogg" loop/>
+    <button pos="200,300" target="menuSingle" text="1P MODE"/>
+    <button pos="300,300" target="menuVersus" text="VS MODE"/>
+    <button pos="400,300" target="menuOptions" text="OPTIONS"/>
+    <button pos="500,300" target="menuTitle" text="TITLE"/>
+</menu>
+
+<!-- Comments are ignored -->
+<!-- Baseplate for menus -->
+<menu id=""> <!-- If there is no id, then the menu gets ignored -->
+    <img src=""/> <!-- image -->
+    <audio src="" type=""/> <!-- any type of audio -->
+    <button pos="" target="" text=""/> <!-- Button for changing game state -->
+    <button pos="" event="" text=""/> <!-- Button for playing music or selecting a character in Vs. Mode -->
+    <button>
 </menu>
