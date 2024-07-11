@@ -1,4 +1,5 @@
 import os, sys, html, html.parser, html.entities
+from numpy import imag
 import pygame
 import pygame_gui
 from . import menu
@@ -27,11 +28,11 @@ class Parser(html.parser.HTMLParser):
             print(f"object {self} created at {hex(id(self))} with size {sys.getsizeof(self)} bytes")
     def __str__(self):
         return self.name
-    
+
     def handle_decl(self, decl: str) -> None:
         if not decl.split(" ")[1].lower() == "gxml":
             raise SyntaxError("PYGUI file must be based on xhtml without a url")
-    
+
     def handle_viewport_tag(self):
         flags = 0
         for index, attribute_pair in enumerate(self.tag_attributes):
@@ -46,10 +47,17 @@ class Parser(html.parser.HTMLParser):
                     print(f"ignoring attribute pair {index} containing {attribute_pair}")
         # pygame.display.set_mode(size, flags) # If commented out, the rest of the code isn't ready
         self.UIManager = menu.get_manager()
-    def handle_buttons(self):
+    def handle_button_tag(self):
         attributes = {}
         for key, value in self.tag_attributes:
             attributes[key] = value
+            self.current_menu_buttons.append(
+                menu.make_button(
+                    pygame.rect.Rect(attributes.get("rect")),
+                    attributes.get("text"),
+                    attributes.get("background_color"),
+                )
+            )
         if __debug__:
             log(attributes)
 
@@ -62,12 +70,16 @@ class Parser(html.parser.HTMLParser):
                 case "version":
                     # Basic version checking
                     if attrs[0][1] in versioning.INCOMPATIBLE_VERSIONS:
-                        log(f"Version {attrs[0][1]} is incompatible with the current version")
-                        raise Exception(f"Version {attrs[0][0]} is no longer supported.")
+                        log(
+                            f"Version {attrs[0][1]} is incompatible with the current version"
+                        )
+                        raise Exception(
+                            f"Version {attrs[0][1]} is no longer supported."
+                        )
                 case "viewport":
                     self.handle_viewport_tag()
                 case "button":
-                    self.handle_buttons()
+                    self.handle_button_tag()
                 case _:
                     log(f"ignoring attribute {attrs} for tag {tag.lower()}")
         if tag.lower() == "link":
@@ -82,20 +94,18 @@ class Parser(html.parser.HTMLParser):
             for index, attribute_pair in enumerate(attrs):
                 match attribute_pair:
                     case ("name", name):
-                        menu_name = name
+                        self.current_menu = menu_name = name
                     case ("background-image", img):
                         image_location = img
                     case ("event", evnt):
-                        self.to_event = evnt # event to be posted after a timer expires
+                        to_event = evnt # event to be posted after a timer expires
                     case ("duration", milliseconds):
                         timer = milliseconds # The duration for the event above
                     case ("background_music", bgm):
                         music_location = bgm
                     case _:
-                        if index == len(attrs) - 1:
-                            menu.menus.append(menu.Menu(menu_name))
-                            menu.menus[-1].set_background(image_location)
-                            menu.menus[-1].set_music_track(bgm)
+                        if len(attrs)-1 == index:
+                            menu.Menu(menu_name, music_location, image_location, to_event, timer)
                         log(f"ignoring attribute pair {index} with content {attribute_pair}")
     def handle_img_tag(self):
         """"""
