@@ -1,7 +1,7 @@
 import pygame, pygame_gui
 import pygame_gui.ui_manager
 from .errors import *
-
+pygame.init()
 valid_animations = []
 
 if not hasattr(pygame, "IS_CE"):
@@ -44,7 +44,7 @@ menus: dict[str, Menu | None] = {
     "current": None  # This is only here so then I don't get fussed at by pylance
 }
 
-manager: pygame_gui.UIManager = pygame_gui.UI_Manager((600, 600))
+manager: pygame_gui.UIManager = pygame_gui.UIManager((600, 600))
 
 
 def get_manager() -> pygame_gui.UIManager:
