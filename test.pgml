@@ -1,0 +1,28 @@
+<!DOCTYPE pgml>
+<meta charset="utf-8"/>
+<meta viewport context="2d" size="600x600" fullscreen="false"/>
+<link rel="appIcon" href="favicon.ico" type="image/x-icon">
+<img src="art/menus.png" for="menus">
+<audio src=""/>
+<menu id="menuTitle">
+    <img src="art/titleScreen.png"/>
+    <audio src="music/title.png" loop/>
+    <input type="keypress" target="menuMain"/>
+    <timer event="demoStart" duration="10000"/>
+</menu>
+
+<menu id="menuMain">
+    <audio src="music/menu.ogg" type="vorbis/ogg" loop/>
+    <button pos="200,300" size="" target="menuSingle" text="1P MODE"/>
+    <button pos="300,300" target="menuVersus" text="VS MODE"/>
+    <button pos="400,300" target="menuOptions" text="OPTIONS"/>
+    <button pos="500,300" target="menuTitle" text="TITLE"/>
+</menu>
+
+<!-- Comments are ignored -->
+<!-- Baseplate for menus -->
+<menu id=""> <!-- If there is no id, then the menu gets ignored -->
+    <button pos="" target="" text=""/> <!-- Button for changing game state -->
+    <button pos="" event="" text=""/> <!-- Button for playing music or selecting a character in Vs. Mode -->
+    <button>
+</menu>
